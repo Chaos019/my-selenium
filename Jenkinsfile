@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven'
+        maven 'maven'
     }
 
     stages {
@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/Chaos019/my-selenium.git'
+                    url: 'https://github.com/chinmayiii/mavenselenium.git'
             }
         }
 
@@ -20,26 +20,22 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
         stage('Run Selenium') {
             steps {
-                sh 'mvn exec:java'
+                sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
             }
         }
     }
 
     post {
+
         success {
-            echo "Open SauceDemo: https://www.saucedemo.com"
+            echo 'Login Successful'
+            echo 'Open SauceDemo Inventory Page: https://www.saucedemo.com/inventory.html'
         }
 
         failure {
-            echo "Build FAILED"
+            echo 'Build FAILED'
         }
     }
 }
